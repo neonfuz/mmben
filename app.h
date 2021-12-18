@@ -3,7 +3,6 @@
 
 typedef struct App App;
 typedef struct Game Game;
-typedef struct Game_data Game_data;
 
 struct Game {
     int width, height, scale;
@@ -18,7 +17,7 @@ struct App {
     SDL_Window *win;
     SDL_Renderer *ren;
     Game game;
-    Game_data *data;
+    void *data;
 };
 
 App new_App(Game g);
