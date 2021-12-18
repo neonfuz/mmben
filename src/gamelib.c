@@ -1,4 +1,4 @@
-#include "app.h"
+#include "gamelib.h"
 
 App App_new(Game g) {
     App app = { 0 };

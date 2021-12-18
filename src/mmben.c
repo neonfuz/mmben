@@ -1,4 +1,4 @@
-#include "app.h"
+#include "gamelib.h"
 #include "mmben.h"
 
 typedef struct {
