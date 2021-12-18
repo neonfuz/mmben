@@ -1,4 +1,4 @@
-main: main.c
+main: main.c app.c
 	$(CC) $(CFLAGS) -o $@ $^ `sdl2-config --cflags --libs`
 
 clean:
