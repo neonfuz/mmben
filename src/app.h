@@ -19,11 +19,5 @@ struct App {
     void *data;
 };
 
-App new_App(Game g);
-void App_handle_event(App *app, SDL_Event e);
-void App_step(App *app);
-void App_draw(App *app);
-void App_run(App *app);
-void App_run_many(App *apps, int n);
-void App_free(App *app);
-int Game_run(Game g);
+int Game_run(Game game);
+int Game_run_many(Game *games, int n);

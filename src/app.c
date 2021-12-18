@@ -1,6 +1,6 @@
 #include "app.h"
 
-App new_App(Game g) {
+App App_new(Game g) {
     App app = { 0 };
     app.win = SDL_CreateWindow(
         "mmben", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
@@ -72,7 +72,7 @@ void App_run_many(App *apps, int n) {
 
 int Game_run(Game g) {
     SDL_Init(SDL_INIT_EVERYTHING);
-    App app = new_App(g);
+    App app = App_new(g);
     App_run(&app);
     SDL_Quit();
     return 0;
