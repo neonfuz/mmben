@@ -8,11 +8,8 @@ consumption yet.
 files
 -----
 
-**src/gamelib.{c,h}:**
-Abstractions of SDL boilerplate, the "game engine"
+**src/gamelib.{c,h}:** Abstractions of SDL boilerplate, the "game engine"
 
-**src/main.c**
-Main entrypoint into application
+**src/main.c:** Main entrypoint into application
 
-**src/mmben.{c,h}**
-Actual code for this game using gamelib
+**src/mmben.{c,h}:** Actual code for this game using gamelib
