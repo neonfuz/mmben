@@ -1,4 +1,4 @@
-main: *.c
+main: src/*.c
 	$(CC) $(CFLAGS) -o $@ $^ `sdl2-config --cflags --libs`
 
 clean:
