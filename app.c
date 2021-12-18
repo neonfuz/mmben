@@ -16,25 +16,30 @@ void App_handle_event(App *app, SDL_Event e) {
 }
 
 void App_step(App *app) {
+    app->game.step(app);
 }
 
 void App_draw(App *app) {
     SDL_RenderClear(app->ren);
+    app->game.draw(app);
     SDL_RenderPresent(app->ren);
 }
 
-App new_App(void) {
+App new_App(Game g) {
     App app = { 0 };
     app.win = SDL_CreateWindow(
         "mmben", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
-        WIDTH*SCALE, HEIGHT*SCALE, 0);
-    app.ren = SDL_CreateRenderer(app.win, -1, 0);
+        g.width*g.scale, g.height*g.scale, 0);
+    app.ren = SDL_CreateRenderer(app.win, -1, SDL_RENDERER_PRESENTVSYNC);
     SDL_RenderSetLogicalSize(app.ren, WIDTH, HEIGHT);
     SDL_RenderSetIntegerScale(app.ren, 1);
+    app.game = g;
+    g.init(&app);
     return app;
 }
 
 void App_free(App *app) {
+     app->game.free(app);
 }
 
 void App_run(App *app) {
