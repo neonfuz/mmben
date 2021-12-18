@@ -4,15 +4,15 @@ typedef struct {
     size_t time;
 } mmben_data;
 
-void mmben_init() {}
-void mmben_free() {}
+static void mmben_init(App *app) {}
+static void mmben_free(App *app) {}
 
-void mmben_step(App *app) {
+static void mmben_step(App *app) {
     mmben_data *data = app->data;
     ++data->time;
 }
 
-void mmben_draw(App *app) {
+static void mmben_draw(App *app) {
     mmben_data *data = app->data;
     size_t time = data->time;
     if (time % 60 == 0)
