@@ -1,7 +1,7 @@
 #include <SDL2/SDL.h>
 
-typedef struct App App;
 typedef struct Game Game;
+typedef struct App App;
 
 struct Game {
     int width, height, scale;
