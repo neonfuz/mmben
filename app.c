@@ -1,6 +1,20 @@
 #include "global.h"
 #include "app.h"
 
+App new_App(Game g) {
+    App app = { 0 };
+    app.win = SDL_CreateWindow(
+        "mmben", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
+        g.width*g.scale, g.height*g.scale, 0);
+    app.ren = SDL_CreateRenderer(app.win, -1, SDL_RENDERER_PRESENTVSYNC);
+    SDL_RenderSetLogicalSize(app.ren, WIDTH, HEIGHT);
+    SDL_RenderSetIntegerScale(app.ren, 1);
+    app.game = g;
+    app.data = calloc(1, g.data_size);
+    g.init(&app);
+    return app;
+}
+
 void App_handle_event(App *app, SDL_Event e) {
     switch (e.type) {
     case SDL_WINDOWEVENT:
@@ -23,20 +37,6 @@ void App_draw(App *app) {
     SDL_RenderClear(app->ren);
     app->game.draw(app);
     SDL_RenderPresent(app->ren);
-}
-
-App new_App(Game g) {
-    App app = { 0 };
-    app.win = SDL_CreateWindow(
-        "mmben", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
-        g.width*g.scale, g.height*g.scale, 0);
-    app.ren = SDL_CreateRenderer(app.win, -1, SDL_RENDERER_PRESENTVSYNC);
-    SDL_RenderSetLogicalSize(app.ren, WIDTH, HEIGHT);
-    SDL_RenderSetIntegerScale(app.ren, 1);
-    app.game = g;
-    app.data = calloc(1, g.data_size);
-    g.init(&app);
-    return app;
 }
 
 void App_free(App *app) {
