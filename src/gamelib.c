@@ -33,6 +33,7 @@ void App_step(App *app) {
 }
 
 void App_draw(App *app) {
+    SDL_SetRenderDrawColor(app->ren, 0, 0, 0, 255);
     SDL_RenderClear(app->ren);
     app->game.draw(app);
     SDL_RenderPresent(app->ren);
@@ -80,10 +81,12 @@ int Game_run(Game g) {
 
 int Game_run_many(Game *gs, int n) {
     SDL_Init(SDL_INIT_EVERYTHING);
+    IMG_Init(IMG_INIT_PNG);
     App apps[n];
     for (int i=0; i<n; ++i)
         apps[i] = App_new(gs[i]);
     App_run_many(apps, n);
+    IMG_Quit();
     SDL_Quit();
     return 0;
 }

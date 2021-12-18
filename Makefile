@@ -1,5 +1,8 @@
+CFLAGS += `sdl2-config --cflags`
+LDFLAGS += `sdl2-config --libs` -lSDL2_image
+
 main: src/*.c
-	$(CC) $(CFLAGS) -o $@ $^ `sdl2-config --cflags --libs`
+	$(CC) $(CFLAGS) -o $@ $^ $(LDFLAGS)
 
 clean:
 	rm -f main
