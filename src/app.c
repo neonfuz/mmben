@@ -1,4 +1,3 @@
-#include "global.h"
 #include "app.h"
 
 App new_App(Game g) {
@@ -7,7 +6,7 @@ App new_App(Game g) {
         "mmben", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
         g.width*g.scale, g.height*g.scale, 0);
     app.ren = SDL_CreateRenderer(app.win, -1, SDL_RENDERER_PRESENTVSYNC);
-    SDL_RenderSetLogicalSize(app.ren, WIDTH, HEIGHT);
+    SDL_RenderSetLogicalSize(app.ren, g.width, g.height);
     SDL_RenderSetIntegerScale(app.ren, 1);
     app.game = g;
     app.data = calloc(1, g.data_size);

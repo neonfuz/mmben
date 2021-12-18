@@ -1,5 +1,4 @@
 #include <SDL2/SDL.h>
-#include "global.h"
 
 typedef struct App App;
 typedef struct Game Game;
