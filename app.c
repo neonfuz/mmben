@@ -16,7 +16,6 @@ void App_handle_event(App *app, SDL_Event e) {
 }
 
 void App_step(App *app) {
-    ++app->time;
 }
 
 void App_draw(App *app) {
@@ -24,14 +23,14 @@ void App_draw(App *app) {
     SDL_RenderPresent(app->ren);
 }
 
-App new_App(new_App_options opts) {
-    App app = {};
+App new_App(void) {
+    App app = { 0 };
     app.win = SDL_CreateWindow(
-        "mmben", opts.winX, opts.winY, WIDTH*SCALE, HEIGHT*SCALE, 0);
+        "mmben", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
+        WIDTH*SCALE, HEIGHT*SCALE, 0);
     app.ren = SDL_CreateRenderer(app.win, -1, 0);
     SDL_RenderSetLogicalSize(app.ren, WIDTH, HEIGHT);
     SDL_RenderSetIntegerScale(app.ren, 1);
-    app.time = 0;
     return app;
 }
 
