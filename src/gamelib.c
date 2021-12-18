@@ -77,3 +77,13 @@ int Game_run(Game g) {
     SDL_Quit();
     return 0;
 }
+
+int Game_run_many(Game *gs, int n) {
+    SDL_Init(SDL_INIT_EVERYTHING);
+    App apps[n];
+    for (int i=0; i<n; ++i)
+        apps[i] = App_new(gs[i]);
+    App_run_many(apps, n);
+    SDL_Quit();
+    return 0;
+}

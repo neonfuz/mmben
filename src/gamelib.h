@@ -21,3 +21,5 @@ struct App {
 
 int Game_run(Game game);
 int Game_run_many(Game *games, int n);
+
+#define LENGTH(X) (sizeof X / sizeof X[0])
