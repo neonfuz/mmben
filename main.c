@@ -1,14 +1,11 @@
-#include <SDL2/SDL.h>
-#include "global.h"
 #include "app.h"
 
 struct Game_data {
     size_t time;
 };
 
-void mmben_init(App *app) {
-    app->data = calloc(1, sizeof(Game_data));
-}
+void mmben_init(App *app) {}
+void mmben_free(App *app) {}
 
 void mmben_step(App *app) {
     ++app->data->time;
@@ -20,20 +17,10 @@ void mmben_draw(App *app) {
         printf("%ld\n", time/60);
 }
 
-void mmben_free(App *app) {
-    free(app->data);
-}
-
 static const
 Game mmben = {
-    .width = 240, .height = 160, .scale = 2,
+    .width = 240, .height = 160, .scale = 2, .data_size = sizeof(Game_data),
     mmben_init, mmben_step, mmben_draw, mmben_free,
 };
 
-int main() {
-    SDL_Init(SDL_INIT_EVERYTHING);
-    App app = new_App(mmben);
-    App_run(&app);
-    SDL_Quit();
-    return 0;
-}
+int main() { return Game_run(mmben); }

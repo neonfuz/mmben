@@ -34,12 +34,14 @@ App new_App(Game g) {
     SDL_RenderSetLogicalSize(app.ren, WIDTH, HEIGHT);
     SDL_RenderSetIntegerScale(app.ren, 1);
     app.game = g;
+    app.data = calloc(1, g.data_size);
     g.init(&app);
     return app;
 }
 
 void App_free(App *app) {
      app->game.free(app);
+     free(app->data);
 }
 
 void App_run(App *app) {
@@ -67,4 +69,12 @@ void App_run_many(App *apps, int n) {
             } else
                 --instances;
     }
+}
+
+int Game_run(Game g) {
+    SDL_Init(SDL_INIT_EVERYTHING);
+    App app = new_App(g);
+    App_run(&app);
+    SDL_Quit();
+    return 0;
 }
