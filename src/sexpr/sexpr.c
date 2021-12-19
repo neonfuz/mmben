@@ -1,4 +1,5 @@
 #include <SDL2/SDL.h>
+#include "string.h"
 
 typedef enum {
   T_LPAR,
@@ -15,10 +16,6 @@ typedef struct Lex {
 Lexed lex_sexpr(const char *sexpr) {
   Lexed l = {0};
   return l;
-}
-
-char *read_file(const char *path) {
-
 }
 
 int main(int argc, char **argv) {
