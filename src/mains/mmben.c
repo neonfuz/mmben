@@ -1,5 +1,5 @@
-#include "gamelib.h"
-#include "mmben.h"
+#include "../gamelib.h"
+#include "../mmben.h"
 
 int main() {
   //  Game games[] = { mmben, mmben };
