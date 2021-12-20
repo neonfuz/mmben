@@ -1,13 +1,8 @@
 #include <SDL2/SDL.h>
 #include "string.h"
 
-typedef struct {
-  char *data;
-  size_t length;
-} String;
-
 String read_file(const char *path) {
-  String s = { NULL, 0 };
+  String s = { NULL, 0, 0 };
   FILE *f = fopen(path, "r");
   if (f == NULL) {
     fprintf(stderr, "Error opening file %s\n", path);
@@ -15,7 +10,8 @@ String read_file(const char *path) {
   }
   fseek(f, 0, SEEK_END);
   s.length = ftell(f);
-  s.data = malloc(s.length+1);
+  s.size = s.length + 1;
+  s.data = malloc(s.size);
   fseek(f, 0, SEEK_SET);
   for (size_t i=0; i<s.length; ++i)
     s.data[i] = fgetc(f);
@@ -23,7 +19,7 @@ String read_file(const char *path) {
   return s;
 }
 
-void String_put(String s) {
+void String_print(String s) {
   for (size_t i=0; i<s.length; ++i)
     fputc(s.data[i], stdout);
 }
