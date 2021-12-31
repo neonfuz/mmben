@@ -7,11 +7,11 @@ bin/mmben: src/mains/mmben.c src/*.c
 	mkdir -p bin
 	$(CC) $(CFLAGS) -o $@ $^ $(LDFLAGS)
 
-bin/parser: src/mains/parser.c src/*.c
+bin/parser: src/mains/parser.c src/*.c src/lib/*/*.c
 	mkdir -p bin
 	$(CC) $(CFLAGS) -o $@ $^ $(LDFLAGS)
 
 clean:
-	rm -f main
+	rm -f bin/*
 
 .PHONY: all clean

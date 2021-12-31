@@ -1,12 +1,15 @@
 #include <SDL2/SDL.h>
-#include "../sexpr/string.h"
-#include "../sexpr/sexpr.h"
+#include "../lib/bnl/bnl.h"
+#include "../lib/bnl/util.h"
 
 int main(int argc, char **argv) {
   if (argc < 2) {
     fprintf(stderr, "usage: %s <file>\n", argv[0]);
     return 1;
   }
+  char *content = read_file(argv[1]);
+  AST ast = AST_parse(content);
+  AST_print(ast);
 
   return 0;
 }
