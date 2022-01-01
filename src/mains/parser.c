@@ -8,8 +8,8 @@ int main(int argc, char **argv) {
     return 1;
   }
   char *content = read_file(argv[1]);
-  AST ast = AST_parse(content);
-  AST_print(ast);
+  Lexed lexed = BNL_lex(content);
+  Lexed_print(lexed);
 
   return 0;
 }

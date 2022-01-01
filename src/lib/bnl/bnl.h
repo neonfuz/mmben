@@ -15,7 +15,7 @@ typedef Token* Token_vec;
 typedef struct {
   char *body;
   Token_vec tokens;
-} AST;
+} Lexed;
 
-AST AST_parse(char *sexpr);
-void AST_print(AST ast);
+Lexed BNL_lex(char *sexpr);
+void Lexed_print(Lexed lexed);
