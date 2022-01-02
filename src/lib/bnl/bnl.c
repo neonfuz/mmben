@@ -63,3 +63,18 @@ void Lexed_print(Lexed lexed) {
   for (int i=0; i<length; ++i)
     Token_print(lexed.tokens[i], lexed.body);
 }
+
+static
+AST parse(Lexed l) {
+  AST ast = { vector_create(), l.body };
+  Object *obj = vector_add_asg(&ast.objs);
+  obj->type = OBJ_NULL;
+  for (unsigned t=0; t<vector_size(l.tokens); ++t) {
+
+  }
+  return ast;
+}
+
+AST BNL_Parse(char *bnl) {
+  return parse(BNL_lex(bnl));
+}
