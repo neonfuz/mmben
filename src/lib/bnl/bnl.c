@@ -7,6 +7,8 @@ Token_type get_tok_type(char c) {
     switch (c) {
     case '(':  return TOK_LPAR;
     case ')':  return TOK_RPAR;
+    case '<':  return TOK_LBR;
+    case '>':  return TOK_RBR;
     case ' ':
     case '\n':
     case '\t':

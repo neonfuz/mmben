@@ -2,6 +2,8 @@ typedef enum {
   TOK_NULL,
   TOK_LPAR,
   TOK_RPAR,
+  TOK_LBR,
+  TOK_RBR,
   TOK_SYM,
 } Token_type;
 
