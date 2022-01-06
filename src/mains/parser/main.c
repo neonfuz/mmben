@@ -10,6 +10,7 @@ int main(int argc, char **argv) {
   SDL_assert(sizeof(Object) == 8);
   char *content = read_file(argv[1]);
   Lexed lexed = BNL_lex(content);
+  Lexed_dedupe(&lexed);
   Lexed_print(lexed);
 
   return 0;

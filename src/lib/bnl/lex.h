@@ -1,10 +1,10 @@
 typedef enum {
   TOK_NULL,
-  TOK_LPAR,
-  TOK_RPAR,
-  TOK_LBR,
-  TOK_RBR,
   TOK_SYM,
+  TOK_STR,
+  TOK_LPAR, TOK_RPAR,
+  TOK_LBR,  TOK_RBR,
+  TOK_MAX,
 } Token_type;
 
 typedef struct {
@@ -20,3 +20,5 @@ typedef struct {
 } Lexed;
 
 void Lexed_print(Lexed lexed);
+Lexed *Lexed_compact(Lexed *l);
+Lexed *Lexed_dedupe(Lexed *l);

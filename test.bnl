@@ -1,1 +1,12 @@
-(battle <hello world>)
+{
+  draw: (
+    with {
+      image: (imgload "stage1.png")
+      cols: (range 0 6)
+      src:  (fn col [</ col  3>  0 40 78])
+      dest: (fn col [<* col 40> 72 40 78])
+    } (map
+        (fn i (draw image (src i) (dest i)))
+        cols)
+  )
+}

@@ -1,10 +1,12 @@
+#define _GNU_SOURCE
 #include <SDL2/SDL.h>
+#include <search.h>
 #include "../c-vector/vec.h"
 #include "bnl.h"
 
-static
-Token_type get_tok_type(char c) {
+static Token_type get_tok_type(char c) {
     switch (c) {
+    case '"':  return TOK_STR;
     case '(':  return TOK_LPAR;
     case ')':  return TOK_RPAR;
     case '<':  return TOK_LBR;
@@ -17,8 +19,12 @@ Token_type get_tok_type(char c) {
     }
 }
 
-static
-Token_vec lex_bnl(const char *bnl) {
+typedef struct {
+  unsigned inString : 1;
+} Lexer_state;
+
+static Token_vec lex_bnl(const char *bnl) {
+  Lexer_state state = { 0 };
   Token_vec tokens = vector_create();
 
   Token *t = vector_add_asg(&tokens);
@@ -29,6 +35,13 @@ Token_vec lex_bnl(const char *bnl) {
   int i=0;
   do {
     Token_type nexttype = get_tok_type(bnl[i]);
+    if (state.inString) {
+      if (nexttype == TOK_STR) {
+        state.inString = 0;
+      } else {
+
+      }
+    }
     if (nexttype != t->type) {
       if (t->type != TOK_NULL) {
         t->length = i - t->start;
@@ -51,11 +64,73 @@ void Token_print(Token t, char *body) {
          t.length, t.start + body);
 }
 
+#define MIN(a,b) ((a)<(b)?(a):(b))
+
+static const char *Token_compare_body_base = NULL;
+static int Token_compare_body_r(const Token *a, const Token *b, const char *base) {
+  if (a->type != b->type)
+    return a->type - b->type;
+  int length = MIN(a->length, b->length);
+  const char *A = a->start + base;
+  const char *B = b->start + base;
+  for (int i=0; i<length; ++i)
+    if (A[i] != B[i])
+      return A[i] - B[i];
+
+  return a->length - b->length;
+}
+static int Token_compare_body(const void *a, const void *b) {
+  return Token_compare_body_r(a, b, Token_compare_body_base);
+}
+static void null_free(__attribute((unused)) void *nodep) {}
+
 Lexed BNL_lex(char *bnl) {
   return (Lexed){
     .body = bnl,
     .tokens = lex_bnl(bnl),
   };
+}
+
+Lexed *Lexed_compact(Lexed *l) {
+  int dest = 0;
+  for (unsigned t=0; t<vector_size(l->tokens); ++t) {
+    int src = l->tokens[t].start;
+    int end = src + l->tokens[t].length;
+    l->tokens[t].start = dest;
+    for (; src<end; ++src, ++dest) {
+      l->body[dest] = l->body[src];
+    }
+  }
+  l->body[dest++] = '\0';
+  l->body = realloc(l->body, dest);
+  return l;
+}
+
+Lexed *Lexed_dedupe(Lexed *l) {
+  void *tree = NULL;
+  int dest = 0;
+  Token_compare_body_base = l->body;
+
+  for (unsigned t=0; t<vector_size(l->tokens); ++t) {
+    Token *tok = &l->tokens[t];
+    Token **found = tfind(tok, &tree, Token_compare_body);
+    if (found) {
+      tok->start = (*found)->start;
+    } else {
+      int src = tok->start;
+      int end = src + tok->length;
+      tok->start = dest;
+      for (; src<end; ++src, ++dest) {
+        l->body[dest] = l->body[src];
+      }
+      tsearch(tok, &tree, Token_compare_body);
+    }
+  }
+  l->body[dest++] = '\0';
+  l->body = realloc(l->body, dest);
+  puts(l->body);
+  tdestroy(tree, null_free);
+  return l;
 }
 
 void Lexed_print(Lexed lexed) {
