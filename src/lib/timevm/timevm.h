@@ -4,15 +4,15 @@ typedef enum {
   TVM_PUSH,
   TVM_SET,
   TVM_PRINT,
+  TVM_SNAP,
 } TVM_type;
 
 typedef struct {
   TVM_type type : 2;
   SDL_bool backwards : 1;
   union {
-    struct {
-      Uint16 index, val;
-    };
+    struct { Uint16 index, val; };
+    struct { Uint32 jump; };
   };
 } TVM_event;
 
@@ -22,7 +22,7 @@ typedef TVM_event* TVM_event_vec;
 typedef struct {
   Uint16_vec stack;
   TVM_event_vec events;
-  Uint32 pc;
+  Uint32 pc, time;
 } TVM_vm;
 
 TVM_vm new_TVM(void);

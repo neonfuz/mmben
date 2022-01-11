@@ -12,6 +12,7 @@ TVM_vm new_TVM(void) {
     .stack  = vector_create(),
     .events = vector_create(),
     .pc     = 0,
+    .time   = 0,
   };
   return vm;
 }
@@ -34,6 +35,15 @@ void TVM_execute(TVM_vm *vm, TVM_event *event) {
     for (unsigned i=0; i<vector_size(vm->stack); ++i)
       printf("%d ", vm->stack[i]);
     putchar('\n');
+    break;
+  case TVM_SNAP:
+    if (!event->backwards) {
+      event->val = vm->time++;
+    } else {
+//      do {
+//        --event;
+//      } while(event->);
+    }
     break;
   }
   event->backwards = !event->backwards;
