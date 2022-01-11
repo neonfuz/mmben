@@ -23,13 +23,12 @@ void TVM_execute(TVM_vm *vm, TVM_event *event) {
     if (!event->backwards) {
       vector_insert(&vm->stack, index, event->val);
     } else {
-      event->val = vm->stack[index];
-      vector_remove(&vm->stack, index);
+      event->val = vm->stack[index-1];
+      vector_remove(&vm->stack, index-1);
     }
-    event->index++;
     break;
   case TVM_SET:
-    swap(&event->val, &vm->stack[vector_size(vm->stack) - event->index - 1]);
+    swap(&event->val, &vm->stack[index-1]);
     break;
   case TVM_PRINT:
     for (unsigned i=0; i<vector_size(vm->stack); ++i)
