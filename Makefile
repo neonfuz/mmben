@@ -1,7 +1,7 @@
 CFLAGS += `sdl2-config --cflags`
 LDFLAGS += `sdl2-config --libs` -lSDL2_image
 
-all: bin/mmben bin/parser bin/wadlist
+all: bin/mmben bin/parser bin/wadlist bin/timevm
 
 bin/%: src/mains/%/*.c src/lib/*/*.c
 	mkdir -p bin
