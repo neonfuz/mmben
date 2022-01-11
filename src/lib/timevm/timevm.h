@@ -1,10 +1,13 @@
 #include <SDL2/SDL.h>
+
+typedef enum {
+  TVM_PUSH,
+  TVM_SET,
+  TVM_PRINT,
+} TVM_type;
+
 typedef struct {
-  enum {
-    TVM_PUSH,
-    TVM_SET,
-    TVM_PRINT,
-  } type : 2;
+  TVM_type type : 2;
   SDL_bool backwards : 1;
   union {
     struct {
