@@ -39,6 +39,14 @@ void TVM_execute(TVM_vm *vm, TVM_event *event) {
   event->backwards = !event->backwards;
 }
 
+void TVM_tick(TVM_vm *vm) {
+  TVM_execute(vm, &vm->events[vm->pc++]);
+}
+
+void TVM_revtick(TVM_vm *vm) {
+  TVM_execute(vm, &vm->events[--vm->pc]);
+}
+
 void TVM_print(TVM_vm *vm) {
   TVM_event print = { .type = TVM_PRINT, .backwards = 0 };
   TVM_execute(vm, &print);

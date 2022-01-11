@@ -27,4 +27,6 @@ typedef struct {
 
 TVM_vm new_TVM(void);
 void TVM_execute(TVM_vm *vm, TVM_event *event);
+void TVM_tick(TVM_vm *vm);
+void TVM_revtick(TVM_vm *vm);
 void TVM_print(TVM_vm *vm);
