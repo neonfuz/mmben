@@ -1,15 +1,17 @@
 #include <SDL2/SDL.h>
 
 typedef enum {
-  TVM_PUSH,
-  TVM_SET,
+  TVM_NOP,
   TVM_PRINT,
+  TVM_SHIFT,
+  TVM_UNSHIFT,
+  TVM_SET,
   TVM_SNAP,
+  TVM_ROLLBACK,
 } TVM_type;
 
 typedef struct {
-  TVM_type type : 2;
-  SDL_bool backwards : 1;
+  TVM_type type : 3;
   union {
     struct { Uint16 index, val; };
     struct { Uint32 jump; };
@@ -26,7 +28,5 @@ typedef struct {
 } TVM_vm;
 
 TVM_vm new_TVM(void);
-void TVM_execute(TVM_vm *vm, TVM_event *event);
-void TVM_tick(TVM_vm *vm);
-void TVM_revtick(TVM_vm *vm);
 void TVM_print(TVM_vm *vm);
+void TVM_tick(TVM_vm *vm);
