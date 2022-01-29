@@ -1,3 +1,39 @@
+battle [
+  background "bkg1.png"
+  stage [
+    player {:x 1 :y 1 :team "left"}
+    enemy  {:x 4 :y 1 :team "right"}
+  ]
+]
+
+00 02 04 08 62 6b 67 31
+2e 70 6e 67 01 02 02 02
+00 01 01 01 03 02 00 04
+01 01
+
+symbols:
+00 battle
+01 stage
+02 player
+03 enemy
+04 background
+
+table:
+00 :x
+01 :y
+
+battle arrlen
+00     02
+  background strlen "bkg1.png"
+  04         08     62 6b 67 31 2e 70 6e 67
+  stage arrlen
+  01    02
+    player tablen :x  1 :y  1
+    02     02     00 01 01 01
+    enemy  tablen :x  4 :y  1
+    03     02     00 04 01 01
+
+old module format:
 {
   draw: (
     with {
